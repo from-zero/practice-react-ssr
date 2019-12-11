@@ -17,7 +17,8 @@ react ssr demo
 路由router
 ------------
 1. 客户端 使用BrowserRouter
-2. 服务端 使用StaticRouter
+2. 服务端 使用StaticRouter,传参location。
+  (不传参location，其实也能渲染出其他的页面，如/about，但是查看源码可以看出代码结构并不是服务端提前渲染的about页面的。而是由客户端匹配到了路由跳转的)
 
 数据store
 ------------
