@@ -2,9 +2,10 @@ const path = require('path')
 
 module.exports = {
     mode:'development',
+    // devtools:'source-map',
     entry:'./client/index.js',
     output:{
-        filename:'index.js',
+        filename:'bundle.js',
         path:path.resolve(__dirname,'public')
     },
     module:{
