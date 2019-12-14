@@ -19,12 +19,14 @@ app.get('*',(req,res)=>{
         if(match && route.component.loadData) promises.push(route.component.loadData(store))
     })
 
-    let sum = 0;
-    const checkReady = ()=>{
-        sum ++;
-        if(sum == promises.length) sendMsg()
+    const myPromise = (fn) =>{
+        return new Promise((resolve)=>{
+            resolve(fn)
+            fn.catch(e=>{console.log(e)})
+        })
     }
-    const sendMsg = ()=>{
+    const t = promises.map(p=>myPromise(p))
+    Promise.all(t).then(()=>{
         const content = renderToString(
             <Provider store={store}>
                 <StaticRouter location={req.url}>
@@ -48,21 +50,7 @@ app.get('*',(req,res)=>{
             </body>
         </html>
         `)
-    } 
-    if(promises.length == 0) sendMsg()
-    else 
-        promises.forEach(p=>{
-            let f = false;
-            // sendMsg()
-            p.then(()=>{
-                f=true;
-                checkReady()
-            }).catch(()=>{
-                if(!f){
-                checkReady() 
-                }
-            })
-        })
+    })
 })
 
 app.listen(8081,()=>{
