@@ -13,7 +13,7 @@ export const getUserInfo = (server)=>{
     console.log('-----in getUserInfo')
     return (dispatch, getState, axiosInstance) =>{
         console.log('-----in getUserInfo inner')
-        return axios.get('http://localhost:8082/api/use/info').then(res=>{
+        return axios.get('/api/user/info').then(res=>{
             const {data} =  res.data
             console.log(data)
             dispatch(getList(data))           

@@ -6,10 +6,23 @@ import routes from '../src/App'
 import Header from '../src/component/Header'
 import {getServerStore} from '../src/store/store'
 import {Provider} from 'react-redux'
+import axios from 'axios'
 
 const app = express()
 const store = getServerStore()
 app.use(express.static('public'))
+app.get('/api/*', (req,res)=>{
+    axios.request({
+        method:req.method.toLocaleLowerCase(),
+        baseURL:'http://localhost:8082',
+        url:req.url,
+        data:req.body
+    }).then(r=>{
+        res.send(r.data)
+    }).catch(e=>{
+        console.log(e)
+    })
+})
 app.get('*',(req,res)=>{
     // const Page = <App title='kaikeba'></App>
     //把react解析成HTML

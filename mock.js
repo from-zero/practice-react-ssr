@@ -2,9 +2,11 @@ const express = require('express')
 const app = express()
 
 app.get('/api/course/list',(req,res)=>{
+    /*
     res.setHeader('Access-Control-Allow-Origin','*')
     res.setHeader('Access-Control-Allow-Methods','GET,POST,DELETE,PUT')
     res.setHeader('Content-Type','application/json')
+    */
 
     res.json({
         code:0,
@@ -17,9 +19,11 @@ app.get('/api/course/list',(req,res)=>{
     })
 })
 app.get('/api/user/info',(req,res)=>{
+    /*
     res.setHeader('Access-Control-Allow-Origin','*')
     res.setHeader('Access-Control-Allow-Methods','GET,POST,DELETE,PUT')
     res.setHeader('Content-Type','application/json')
+    */
 
     res.json({
         code:0,
