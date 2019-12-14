@@ -26,6 +26,7 @@ app.get('*',(req,res)=>{
         })
     }
     const t = promises.map(p=>myPromise(p))
+
     Promise.all(t).then(()=>{
         const content = renderToString(
             <Provider store={store}>
