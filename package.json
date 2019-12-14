@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cstart": "concurrently \"npm run dev:server\"  \"npm run dev:client\" \"npm run dev:start\" ",
-    "start": "npm run dev:server | npm run dev:client | npm run dev:start",
+    "start": "concurrently \"npm run dev:server\"  \"npm run dev:client\" \"npm run dev:start\" ",
+    "mstart": "npm run dev:server | npm run dev:client | npm run dev:start",
     "dev:server": "webpack --config webpack.server.js --watch",
     "dev:client": "webpack --config webpack.client.js --watch",
     "dev:start": "nodemon --watch build --exec node \"./build/bundle.js\""
