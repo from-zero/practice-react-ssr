@@ -11,6 +11,7 @@ import axios from 'axios'
 const app = express()
 const store = getServerStore()
 app.use(express.static('public'))
+let sum = 0;
 app.get('/api/*', (req,res)=>{
     axios.request({
         method:req.method.toLocaleLowerCase(),
@@ -49,6 +50,7 @@ app.get('*',(req,res)=>{
                 </StaticRouter>
             </Provider>
         )
+        console.log('from server'+sum++)
         res.send(`
         <html>
             <head>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {host} from '../config/index'
 
 //action type
 const GET_LIST = 'INDEX/GET_LIST'
@@ -10,13 +11,15 @@ const getList = (list)=>({
 })
 
 export const getIndexList = (server)=>{
-    console.log('in=============getIndex')
+    // console.log('in=============getIndex')
     return (dispatch, getState, axiosInstance) =>{
-    console.log('in=============getIndex ---in')
-        return axios.get('/api/course/list').then(res=>{
+    // console.log('in=============getIndex ---in')
+        return axios.get(`${host}/api/course/list`).then(res=>{
             const {list} =  res.data
             console.log(list)
             dispatch(getList(list))           
+        }).catch(e=>{
+            console.log(e)
         })
     }
 }
