@@ -13,7 +13,7 @@ export const getIndexList = (server)=>{
     console.log('in=============getIndex')
     return (dispatch, getState, axiosInstance) =>{
     console.log('in=============getIndex ---in')
-        return axios.get('http://localhost:8082/api/course/list').then(res=>{
+        return axios.get('/api/course/list').then(res=>{
             const {list} =  res.data
             console.log(list)
             dispatch(getList(list))           
