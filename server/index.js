@@ -1,7 +1,7 @@
 import React from 'react'
 import {renderToString} from 'react-dom/server'
 import express from 'express'
-import {StaticRouter,Route,matchPath} from 'react-router-dom'
+import {StaticRouter,Route,matchPath,Switch} from 'react-router-dom'
 import routes from '../src/App'
 import Header from '../src/component/Header'
 import {getServerStore} from '../src/store/store'
@@ -12,7 +12,6 @@ import proxy from 'http-proxy-middleware'
 const app = express()
 const store = getServerStore()
 app.use(express.static('public'))
-let sum = 0;
 app.get('/api', proxy({target:'http://localhost:8082', changeOrigin:true}))
 app.get('*',(req,res)=>{
     // const Page = <App title='kaikeba'></App>
@@ -31,21 +30,29 @@ app.get('*',(req,res)=>{
     })
 
     Promise.all(promises).then(()=>{
+        const context = {}
         const content = renderToString(
             <Provider store={store}>
-                <StaticRouter location={req.url}>
+                <StaticRouter location={req.url} context={context}>
                     <Header></Header>
-                    {routes.map(route=><Route {...route}></Route>)}
+                    <Switch>
+                        {routes.map(route=><Route {...route}></Route>)}
+                    </Switch>
                 </StaticRouter>
             </Provider>
         )
-        console.log('from server'+sum++)
+        console.log('from server',context)
+        if(context.status){
+            res.status(context.status)
+        }
+        if(context.action === 'REPLACE'){
+            res.redirect(301,context.url)
+        }
         res.send(`
         <html>
             <head>
                 <meta charset='utf-8'/>
                 <title>react ssr</title>
-                <link rel="icon" href="data:;base64,=">
             </head>
             <body>
                 <div id='content'>${content}</div>

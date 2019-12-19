@@ -17,6 +17,11 @@ module.exports = {
                 presets:['@babel/preset-react',['@babel/preset-env']]
                 //支持jsx语法、支持es6语法
             }
-        }]
+        },
+        {
+            test:/\.css$/,
+            use:['style-loader','css-loader']
+        }
+        ]
     }
 }

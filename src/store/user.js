@@ -2,7 +2,9 @@
 // import {host} from '../config/index'
 
 //action type
-const GET_LIST = 'INDEX/GET_USERINFO'
+const GET_LIST = 'USER/GET_USERINFO'
+const LOGIN = 'USER/LOGIN'
+const LOGOUT = 'USER/LOGOUT'
 
 //action createtor 
 const getList = (data)=>({
@@ -14,7 +16,7 @@ export const getUserInfo = (server)=>{
     console.log('-----in getUserInfo')
     return (dispatch, getState, $axios) =>{
         console.log('-----in getUserInfo inner')
-        return $axios.get(`/api/use/info`).then(res=>{
+        return $axios.get(`/api/user/info`).then(res=>{
             const {data} =  res.data
             console.log(data)
             dispatch(getList(data))           
@@ -24,13 +26,24 @@ export const getUserInfo = (server)=>{
     }
 }
 
-const defaultStatus = {userinfo:{}}
+const defaultStatus = {isLogin:false, userinfo:{}}
 export default (state = defaultStatus, action)=>{
     switch(action.type){
         case GET_LIST:
-            const newState = {
+            return {
                 ...state,
                 userinfo:action.data
+            }
+            return newState
+        case LOGIN:
+            return {
+                ...state,
+                isLogin:true
+            }
+        case LOGOUT:
+            return {
+                ...state,
+                isLogin:false
             }
             return newState
         default:
