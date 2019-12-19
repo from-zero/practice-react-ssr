@@ -7,41 +7,30 @@ import Header from '../src/component/Header'
 import {getServerStore} from '../src/store/store'
 import {Provider} from 'react-redux'
 import axios from 'axios'
+import proxy from 'http-proxy-middleware'
 
 const app = express()
 const store = getServerStore()
 app.use(express.static('public'))
 let sum = 0;
-app.get('/api/*', (req,res)=>{
-    axios.request({
-        method:req.method.toLocaleLowerCase(),
-        baseURL:'http://localhost:8082',
-        url:req.url,
-        data:req.body
-    }).then(r=>{
-        res.send(r.data)
-    }).catch(e=>{
-        console.log(e)
-    })
-})
+app.get('/api', proxy({target:'http://localhost:8082', changeOrigin:true}))
 app.get('*',(req,res)=>{
     // const Page = <App title='kaikeba'></App>
     //把react解析成HTML
     const promises = []
     routes.some(route=>{
         const match = matchPath(req.url, route);
-        if(match && route.component.loadData) promises.push(route.component.loadData(store))
+        if(match && route.component.loadData){
+            const myPromise = new Promise((resolve)=>{
+                    route.component.loadData(store)
+                        .then(resolve)
+                        .catch(e=>{console.log(e); resolve()})
+            })
+            promises.push(myPromise)
+        } 
     })
 
-    const myPromise = (fn) =>{
-        return new Promise((resolve)=>{
-            resolve(fn)
-            fn.catch(e=>{console.log(e)})
-        })
-    }
-    const t = promises.map(p=>myPromise(p))
-
-    Promise.all(t).then(()=>{
+    Promise.all(promises).then(()=>{
         const content = renderToString(
             <Provider store={store}>
                 <StaticRouter location={req.url}>
@@ -56,6 +45,7 @@ app.get('*',(req,res)=>{
             <head>
                 <meta charset='utf-8'/>
                 <title>react ssr</title>
+                <link rel="icon" href="data:;base64,=">
             </head>
             <body>
                 <div id='content'>${content}</div>

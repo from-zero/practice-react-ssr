@@ -1,5 +1,5 @@
-import axios from 'axios'
-import {host} from '../config/index'
+// import axios from 'axios'
+// import {host} from '../config/index'
 
 //action type
 const GET_LIST = 'INDEX/GET_USERINFO'
@@ -12,9 +12,9 @@ const getList = (data)=>({
 
 export const getUserInfo = (server)=>{
     console.log('-----in getUserInfo')
-    return (dispatch, getState, axiosInstance) =>{
+    return (dispatch, getState, $axios) =>{
         console.log('-----in getUserInfo inner')
-        return axios.get(`${host}/api/use/info`).then(res=>{
+        return $axios.get(`/api/use/info`).then(res=>{
             const {data} =  res.data
             console.log(data)
             dispatch(getList(data))           

@@ -15,7 +15,7 @@ function Index(props){
         <button onClick={()=>{setCount(count+1)}}>累加</button>
         <hr/>
         <ul>{
-            props.list.map(item=>{
+            props.list && props.list.map(item=>{
             return <li key={item.id}>{item.name}</li>
             })
             }</ul>

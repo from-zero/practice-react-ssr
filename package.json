@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run dev:server\"  \"npm run dev:client\" \"npm run dev:start\" ",
+    "start": "concurrently \"npm run dev:server\"  \"npm run dev:client\" \"npm run dev:start\" \"nodemon mock.js\" ",
     "mstart": "npm run dev:server | npm run dev:client | npm run dev:start",
     "dev:server": "webpack --config webpack.server.js --watch",
     "dev:client": "webpack --config webpack.client.js --watch",
@@ -27,6 +27,7 @@
     "babel-loader": "^8.0.6",
     "concurrently": "^5.0.1",
     "express": "^4.17.1",
+    "http-proxy-middleware": "^0.20.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
