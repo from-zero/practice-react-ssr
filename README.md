@@ -48,6 +48,10 @@ css
 client端通过使用css-loader,style-loader解析css并生成style标签
 server端没有document对象，无法使用style-loader，需要使用isomorphic-style-loader生成style标签。只是这种方式并不是通过服务端直接将style渲染在页面上，而还是通过客户端的bundle.js进行动态插入.所以暂时没有用 - -？？
 
+状态码处理
+------------
+可以通过服务端的staticRouter的context属性，在路由匹配的时候做上标记，依靠context中的标记返回不同的状态码
+
 SSR vs SPA
 ------------
 与传统 SPA (单页应用程序 (Single-Page Application)) 相比，服务器端渲染 (SSR) 的优势主要在于：
