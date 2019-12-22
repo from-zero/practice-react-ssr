@@ -23,8 +23,15 @@ module.exports = {
         },
         {
             test:/\.css$/,
-            use:['css-loader']//'isomorphic-style-loader',
+            use:['isomorphic-style-loader',{
+                loader:'css-loader',
+                options:{
+                     modules: {
+                        localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                    }
+                }
+                }]//,
+            }
+            ]
         }
-        ]
     }
-}

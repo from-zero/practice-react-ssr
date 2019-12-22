@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom'
 import About from './container/About'
 import Index from './container/Index'
 import User from './component/User'
-import './App.css'
+// import './App.css'
 import NotFound from './container/NotFound'
 import Login from './container/Login'
 

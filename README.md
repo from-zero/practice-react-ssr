@@ -52,6 +52,16 @@ server端没有document对象，无法使用style-loader，需要使用isomorphi
 ------------
 可以通过服务端的staticRouter的context属性，在路由匹配的时候做上标记，依靠context中的标记返回不同的状态码
 
+降级渲染
+------------
+client端配置常规CSR,node server在响应浏览器时可以根据url参数、服务器配置、并发数量等判断是返回SSR应用还是CSR应用。在渲染页面时根据是否有window._context区分SSR和CSR从而选择使用React.hydrate还是React.render
+
+局部css
+------------
+client端使用css-loader的modules参数
+server端使用特有的style._getCss()【isomorphic-style-loader】获取css样式，并通过staticContext保存然后嵌入SSR的html页面
+在判断是否是server端然后获取style._getCss时，可以使用isomorphic提供的高阶组件withStyles
+
 SSR vs SPA
 ------------
 与传统 SPA (单页应用程序 (Single-Page Application)) 相比，服务器端渲染 (SSR) 的优势主要在于：
